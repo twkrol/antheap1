@@ -1,0 +1,56 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Tomasz Król - zadanie 1";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Wyszkiwarka firm wg NIP na mf.gov.pl</h1>
+    <p>
+        <form method="post">
+            <div class="row">
+                <div asp-validation-summary="All"></div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-auto">
+                    <input type="text" name="nip" class="form-control" placeholder="Wpisz NIP firmy..." required />
+                </div>
+                <div class="col-auto">
+                    <button class="btn btn-primary">Szukaj</button>
+                </div>
+            </div>
+        </form>
+    </p>
+    @if (Model.Message is not null) {
+    <div class="alert alert-danger" role="alert">@Model.Message</div>
+    }
+
+</div>
+
+<div id="history">
+    <h3>Dotychczasowe wyszukiwania:</h3>
+    <table class="table table-sm">
+        <thead>
+            <tr>
+                <th>NIP</th>
+                <th>Nazwa</th>
+                <th>Adres</th>
+            </tr>
+        </thead>
+        <tbody>
+        @if (Model.organizations is not null){
+            @foreach (var item in Model.organizations){
+                <tr>
+                    <td>@Html.DisplayFor(x=>item.Nip)</td>
+                    <td style="width:50%;">@Html.DisplayFor(x=>item.Name)</td>
+                    <td style="width:33%;">@Html.DisplayFor(x=>item.WorkingAddress)</td>
+                </tr>
+            }
+        }
+        </tbody>
+    </table>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
